@@ -1,5 +1,5 @@
 # RuntimePermission
-Android RuntimePermission Example, <br/> 
+Android RuntimePermission Example<br/> 
 
 permission dialog<br/>
 ![](app/src/main/assets/PermissionDialog.png)
