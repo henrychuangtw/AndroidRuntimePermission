@@ -9,7 +9,7 @@ show UI with rationale of requesting this permission<br/>
 ![](app/src/main/assets/PermissionRationale.png)
 <br/><br/>
 
-once user deny permission, next time will see "Nerver ask again"
+once user deny permission, next time will see "Nerver ask again"<br/>
 ![](app/src/main/assets/NeverAskAgain.png)
 <br/><br/>
 
