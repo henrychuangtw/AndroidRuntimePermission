@@ -1,7 +1,12 @@
 # RuntimePermission
-Android RuntimePermission Example 
+Open app setting, when user chose Nerver ask again.
 
-<br/><br/>
+
+# Test Device
+HTC One A9, Android 6.0
+<br/>
+HTC One X, Android 4.2.2
+
 
 # Reference
 <a href="http://inthecheesefactory.com/blog/things-you-need-to-know-about-android-m-permission-developer-edition/en" target="_blank">http://inthecheesefactory.com/blog/things-you-need-to-know-about-android-m-permission-developer-edition/en</a>
