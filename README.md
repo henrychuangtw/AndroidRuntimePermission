@@ -10,6 +10,8 @@ show UI with rationale of requesting this permission<br/>
 <br/><br/>
 
 once user deny permission, next time will see "Nerver ask again"
+![](app/src/main/assets/NeverAskAgain.png)
+<br/><br/>
 
 open your app setting when user chose "Nerver ask again"<br/>
 ![](app/src/main/assets/AppSetting.png)
