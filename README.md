@@ -1,6 +1,18 @@
 # RuntimePermission
-Open app setting, when user chose Nerver ask again.
+Android RuntimePermission Example, <br/> 
 
+permission dialog<br/>
+![](app/src/main/assets/PermissionDialog.png)
+<br/><br/>
+
+show UI with rationale of requesting this permission<br/>
+![](app/src/main/assets/PermissionRationale.png)
+<br/><br/>
+
+once user deny permission, next time will see "Nerver ask again"
+
+open your app setting when user chose "Nerver ask again"<br/>
+![](app/src/main/assets/AppSetting.png)
 
 # Test Device
 HTC One A9, Android 6.0
