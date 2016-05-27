@@ -54,7 +54,10 @@ public class TestActivity extends Activity {
         int hasPermission = ContextCompat.checkSelfPermission(TestActivity.this, sPermission);
         if (hasPermission != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(TestActivity.this, sPermission)) {
-                showRationale();
+                RuntimePermissionUtils.showRationale(TestActivity.this,
+                        Manifest.permission.READ_CONTACTS,
+                        REQUEST_CODE_ASK_PERMISSIONS,
+                        "You need to allow access to Contact");
 
             }else{
                 ActivityCompat.requestPermissions(TestActivity.this,
@@ -77,26 +80,6 @@ public class TestActivity extends Activity {
 
     }
 
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(TestActivity.this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create()
-                .show();
-    }
-    private void showRationale(){
-        showMessageOKCancel("You need to allow access to Contact",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(TestActivity.this,
-                                new String[]{sPermission},
-                                REQUEST_CODE_ASK_PERMISSIONS);
-                    }
-                });
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -108,21 +91,17 @@ public class TestActivity extends Activity {
                 } else {
                     boolean showRationale =  ActivityCompat.shouldShowRequestPermissionRationale(TestActivity.this, sPermission);
                     if (! showRationale) {
-                        showMessageOKCancel("You need to allow permission",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                        intent.setData(uri);
-                                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-
-                                    }
-                                });
+                        RuntimePermissionUtils.showRationale(TestActivity.this,
+                                Manifest.permission.READ_CONTACTS,
+                                REQUEST_PERMISSION_SETTING,
+                                "You need to allow permission",
+                                true);
 
                     } else if (sPermission.equals(permissions[0])) {
-                        showRationale();
-
+                        RuntimePermissionUtils.showRationale(TestActivity.this,
+                                Manifest.permission.READ_CONTACTS,
+                                REQUEST_CODE_ASK_PERMISSIONS,
+                                "You need to allow access to Contact");
                     }
 
                 }
