@@ -16,6 +16,7 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -130,6 +131,19 @@ public class TestActivity extends Activity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_PERMISSION_SETTING){
+            int hasPermission = ContextCompat.checkSelfPermission(TestActivity.this, sPermission);
+            if (hasPermission == PackageManager.PERMISSION_GRANTED) {
+                queryContact();
+            }
+
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 

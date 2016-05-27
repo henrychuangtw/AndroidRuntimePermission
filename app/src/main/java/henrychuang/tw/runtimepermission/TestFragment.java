@@ -136,6 +136,17 @@ public class TestFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if(requestCode == REQUEST_PERMISSION_SETTING){
+                int hasPermission = ContextCompat.checkSelfPermission(getActivity(), sPermission);
+                if (hasPermission == PackageManager.PERMISSION_GRANTED) {
+                    queryContact();
+                }
 
+            }else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
 
+    }
 }
