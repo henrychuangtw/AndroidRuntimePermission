@@ -19,6 +19,10 @@ once user deny permission, next time will see "Nerver ask again"<br/>
 
 open your app setting when user chose "Nerver ask again"<br/>
 ![](app/src/main/assets/AppSetting.png)
+<br/><br/>
+
+request multiple permissions<br/>
+![](app/src/main/assets/MultiplePermissions.png)
 
 # Test Device
 HTC One A9, Android 6.0

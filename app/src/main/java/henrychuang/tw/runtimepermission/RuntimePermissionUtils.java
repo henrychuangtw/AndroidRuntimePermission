@@ -5,26 +5,73 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
+import java.util.List;
 
 /**
  * Created by henry.chuang on 2016/5/27.
  */
 public class RuntimePermissionUtils {
     public static void showRationale(Context context, String permission, int requestCode, String message){
-        showRationale(context, null, permission, requestCode, message);
+        showRationale(context,
+                null,
+                permission,
+                requestCode,
+                message);
+    }
+    public static void showRationale(Context context, String[] permissions, int requestCode, String message){
+        showRationale(context,
+                null,
+                permissions,
+                requestCode,
+                message);
     }
     public static void showRationale(Context context, String permission, int requestCode, String message, boolean showAppSetting){
-        showRationale(context, null, permission, requestCode, message, showAppSetting);
+        showRationale(context,
+                null,
+                permission,
+                requestCode,
+                message,
+                showAppSetting);
+    }
+    public static void  showRationale(Context context, String[] permissions, int requestCode, String message, boolean showAppSetting){
+        showRationale(context,
+                null,
+                permissions,
+                requestCode,
+                message,
+                showAppSetting);
     }
     public static void showRationale(Context context, Fragment fragment, String permission, int requestCode, String message){
-        showRationale(context, fragment, permission, requestCode, message, false);
+        showRationale(context,
+                fragment,
+                permission,
+                requestCode,
+                message,
+                false);
     }
-    public static void showRationale(final Context context, final Fragment fragment, final String permission, final int requestCode, String message, final boolean showAppSetting){
+    public static void showRationale(Context context, Fragment fragment, String[] permissions, int requestCode, String message){
+        showRationale(context,
+                fragment,
+                permissions,
+                requestCode,
+                message,
+                false);
+    }
+    public static void showRationale(Context context, Fragment fragment, String permission, int requestCode, String message, boolean showAppSetting){
+        showRationale(context,
+                fragment,
+                new String[]{permission},
+                requestCode,
+                message,
+                showAppSetting);
+    }
+    public static void showRationale(final Context context, final Fragment fragment, final String[] permissions, final int requestCode, String message, final boolean showAppSetting){
         new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton("OK",  new DialogInterface.OnClickListener() {
@@ -37,7 +84,7 @@ public class RuntimePermissionUtils {
                                 intent.setData(uri);
                                 ((Activity) context).startActivityForResult(intent, requestCode);
                             }else{
-                                ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
+                                ActivityCompat.requestPermissions((Activity) context, permissions, requestCode);
                             }
 
                         }else{
@@ -47,7 +94,7 @@ public class RuntimePermissionUtils {
                                 intent.setData(uri);
                                 fragment.startActivityForResult(intent, requestCode);
                             }else{
-                                fragment.requestPermissions(new String[]{permission}, requestCode);
+                                fragment.requestPermissions(permissions, requestCode);
                             }
 
                         }
@@ -59,6 +106,30 @@ public class RuntimePermissionUtils {
                 .create()
                 .show();
 
+    }
+
+    public static boolean addPermission(Context context, List<String> permissionsList, String permission){
+        return addPermission(context,
+                    null,
+                    permissionsList,
+                    permission);
+    }
+    public static boolean addPermission(Context context, Fragment fragment, List<String> permissionsList, String permission) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(permission);
+
+            if(fragment == null){
+                if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission))
+                    return false;
+
+            }else{
+                if(fragment.shouldShowRequestPermissionRationale(permission))
+                    return false;
+
+            }
+
+        }
+        return true;
     }
 
 }

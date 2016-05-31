@@ -2,33 +2,27 @@ package henrychuang.tw.runtimepermission;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
-
+import android.widget.TextView;
 
 public class TestFragment extends Fragment {
-    Button btnContact;
-
-    String sPermission =  Manifest.permission.READ_CONTACTS;
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 100;
-    final private int REQUEST_PERMISSION_SETTING = 125;
-
+    private Button mButtonContact;
+    private TextView mTextViewResult;
+    private String sPermission =  Manifest.permission.READ_CONTACTS;
+    private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
+    private final int REQUEST_PERMISSION_SETTING = 125;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,21 +30,21 @@ public class TestFragment extends Fragment {
         View view =  inflater.inflate(R.layout.permission_test, container, false);
         // you can use findViewById() using the above 'view'
 
-        btnContact = (Button) view.findViewById(R.id.btn_contact);
-        btnContact.setOnClickListener(listener_btnContact);
+        mTextViewResult = (TextView) view.findViewById(R.id.txt_result);
+
+        mButtonContact = (Button) view.findViewById(R.id.btn_contact);
+        mButtonContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                queryContact();
+
+
+            }
+        });
 
         return view;
     }
 
-
-    View.OnClickListener listener_btnContact = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            queryContact();
-
-
-        }
-    };
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void queryContact(){
@@ -71,16 +65,7 @@ public class TestFragment extends Fragment {
             return;
         }
 
-
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        int iCount = cursor.getCount();
-
-        if(cursor != null)
-            cursor.close();
-
-        Toast.makeText(getActivity(), "total contacts : " + iCount, Toast.LENGTH_LONG).show();
-
+        showContactsCount();
     }
 
 
@@ -112,6 +97,7 @@ public class TestFragment extends Fragment {
 
                 }
                 break;
+
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -131,4 +117,16 @@ public class TestFragment extends Fragment {
             }
 
     }
+
+    private void showContactsCount() {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        int iCount = cursor.getCount();
+
+        if (cursor != null)
+            cursor.close();
+
+        mTextViewResult.append("total contacts : " + iCount + "\n");
+    }
+
 }

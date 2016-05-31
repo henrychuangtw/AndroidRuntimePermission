@@ -13,6 +13,9 @@
         android:layout_marginTop="30dp"
         android:text="android.permission-group.CONTACTS"/>
 
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_result"
+        android:layout_marginTop="30dp"/>
 </LinearLayout>

@@ -33,7 +33,19 @@
         android:id="@+id/btn_setRingtone"
         android:textAllCaps="false"
         android:layout_marginTop="30dp"
-        android:text="setActualDefaultRingtoneUri"/>
+        android:text="setRingtone(Special Permissions)"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_multiplePermission"
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:text="Multiple Permissions"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_result"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
