@@ -1,7 +1,7 @@
 # RuntimePermission
 Android RuntimePermission, example of Dangerous Permissions and Special Permissions<br/> 
 
-Dangerous Permissions(Ex: in activity or fragment) and Special Permissions(Ex: setActualDefaultRingtoneUri)<br/>
+Dangerous Permissions(Ex: in activity or fragment) and Special Permissions(Ex: setRingtone)<br/>
 ![](app/src/main/assets/main.png)
 <br/><br/>
 
