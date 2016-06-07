@@ -13,6 +13,14 @@
         android:layout_marginTop="30dp"
         android:text="android.permission-group.CONTACTS"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_common"
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:text="common RequestPermissionActivity"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

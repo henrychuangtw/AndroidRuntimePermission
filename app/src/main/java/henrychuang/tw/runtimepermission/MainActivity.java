@@ -131,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                         if(perms.get(Manifest.permission.READ_PHONE_STATE)  != PackageManager.PERMISSION_GRANTED )
                             message += showRationale_READ_PHONE_STATE ? "" : "Read PhoneState";
 
+                        message += "  manually from app setting";
+
                         RuntimePermissionUtils.showRationale(MainActivity.this,
                                 "",
                                 REQUEST_PERMISSION_SETTING_MULTIPLE_PERMISSIONS,
@@ -148,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == RequestCode_Ringtone && resultCode == RESULT_OK){
             Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
             Log.d(LogTag, "" +  uri);
@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void nowHavePermission(){
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void needPermissionDialog(final int requestCode){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("You need to allow permission");
+        builder.setMessage("You need to allow permission  manually from app setting");
         builder.setPositiveButton("OK",
                 new android.content.DialogInterface.OnClickListener() {
                     @Override

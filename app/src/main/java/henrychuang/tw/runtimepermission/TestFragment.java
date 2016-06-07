@@ -2,10 +2,12 @@ package henrychuang.tw.runtimepermission;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -18,11 +20,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class TestFragment extends Fragment {
-    private Button mButtonContact;
+    private Button mButtonContact, mButtonCommon;
     private TextView mTextViewResult;
     private String sPermission =  Manifest.permission.READ_CONTACTS;
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private final int REQUEST_PERMISSION_SETTING = 125;
+    private int mRequestCode_buttonCommon = 20;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +42,15 @@ public class TestFragment extends Fragment {
                 queryContact();
 
 
+            }
+        });
+
+        mButtonCommon = (Button)view.findViewById(R.id.btn_common);
+        mButtonCommon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = RequestPermissionActivity.newStartIntent(getActivity(), 1);
+                startActivityForResult(intent, mRequestCode_buttonCommon);
             }
         });
 
@@ -83,7 +95,7 @@ public class TestFragment extends Fragment {
                                 TestFragment.this,
                                 Manifest.permission.READ_CONTACTS,
                                 REQUEST_PERMISSION_SETTING,
-                                "You need to allow permission",
+                                "You need to allow permission manually from app setting",
                                 true);
 
                     } else if (sPermission.equals(permissions[0])) {
@@ -106,16 +118,18 @@ public class TestFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if(requestCode == REQUEST_PERMISSION_SETTING){
-                int hasPermission = ContextCompat.checkSelfPermission(getActivity(), sPermission);
-                if (hasPermission == PackageManager.PERMISSION_GRANTED) {
-                    queryContact();
-                }
-
-            }else {
-                super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PERMISSION_SETTING) {
+            int hasPermission = ContextCompat.checkSelfPermission(getActivity(), sPermission);
+            if (hasPermission == PackageManager.PERMISSION_GRANTED) {
+                queryContact();
             }
 
+        }else if(requestCode == mRequestCode_buttonCommon && resultCode == Activity.RESULT_OK){
+            Intent myIntentDial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:16462574500"));
+            startActivity(myIntentDial);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showContactsCount() {

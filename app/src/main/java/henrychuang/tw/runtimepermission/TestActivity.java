@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -18,11 +19,12 @@ import android.widget.TextView;
 
 
 public class TestActivity extends Activity {
-    private Button mButtonContact;
+    private Button mButtonContact, mButtonCommon;
     private TextView mTextViewResult;
     private String sPermission = Manifest.permission.READ_CONTACTS;
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private final int REQUEST_PERMISSION_SETTING = 125;
+    private int mRequestCode_buttonCommon = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,15 @@ public class TestActivity extends Activity {
                 mTextViewResult.setText("");
 
                 queryContact();
+            }
+        });
+
+        mButtonCommon = (Button)findViewById(R.id.btn_common);
+        mButtonCommon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = RequestPermissionActivity.newStartIntent(TestActivity.this, 1);
+                startActivityForResult(intent, mRequestCode_buttonCommon);
             }
         });
 
@@ -82,7 +93,7 @@ public class TestActivity extends Activity {
                         RuntimePermissionUtils.showRationale(TestActivity.this,
                                 Manifest.permission.READ_CONTACTS,
                                 REQUEST_PERMISSION_SETTING,
-                                "You need to allow permission",
+                                "You need to allow permission manually from app setting",
                                 true);
 
                     } else if (sPermission.equals(permissions[0])) {
@@ -109,9 +120,15 @@ public class TestActivity extends Activity {
                 queryContact();
             }
 
-        }else {
-            super.onActivityResult(requestCode, resultCode, data);
+        }else if(requestCode == mRequestCode_buttonCommon && resultCode == Activity.RESULT_OK){
+            if(ContextCompat.checkSelfPermission(TestActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+                Intent intentDial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:16462574500"));
+                startActivity(intentDial);
+            }
+
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showContactsCount() {

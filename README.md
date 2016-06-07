@@ -1,5 +1,13 @@
 # RuntimePermission
-Android RuntimePermission, example of Dangerous Permissions and Special Permissions<br/> 
+Android RuntimePermission, example of Dangerous Permissions and Special Permissions
+<br/><br/>
+In my practical experience, I think it is better to use common activity to request permission, 
+advantage of this design pattern :<br/>
+1. No need to add RuntimePermission code in every activity or fragment.<br/>
+2. If RuntimePermission code need to edit later, just edit common activity.<br/>
+3. Avoiding bugs with nested fragment(ex: <a href="https://code.google.com/p/android/issues/detail?id=189121" target="_blank">Issue 189121</a>).
+
+<br/><br/>
 
 Dangerous Permissions(Ex: in activity or fragment) and Special Permissions(Ex: setRingtone)<br/>
 ![](app/src/main/assets/main.png)
@@ -23,6 +31,10 @@ open your app setting when user chose "Nerver ask again"<br/>
 
 request multiple permissions<br/>
 ![](app/src/main/assets/MultiplePermissions.png)
+<br/><br/>
+
+use common activity to request permission<br/>
+![](app/src/main/assets/common_RequestPermission.png)
 
 # Test Device
 HTC One A9, Android 6.0

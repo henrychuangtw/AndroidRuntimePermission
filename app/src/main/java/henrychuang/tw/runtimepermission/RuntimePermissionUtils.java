@@ -24,6 +24,15 @@ public class RuntimePermissionUtils {
                 requestCode,
                 message);
     }
+    public static void showRationale(Context context, String permission, int requestCode, String message, DialogInterface.OnClickListener cancelListener){
+        showRationale(context,
+                null,
+                new String[]{permission},
+                requestCode,
+                message,
+                false,
+                cancelListener);
+    }
     public static void showRationale(Context context, String[] permissions, int requestCode, String message){
         showRationale(context,
                 null,
@@ -38,6 +47,15 @@ public class RuntimePermissionUtils {
                 requestCode,
                 message,
                 showAppSetting);
+    }
+    public static void showRationale(Context context, String permission, int requestCode, String message, boolean showAppSetting, DialogInterface.OnClickListener cancelListener){
+        showRationale(context,
+                null,
+                new String[]{permission},
+                requestCode,
+                message,
+                showAppSetting,
+                cancelListener);
     }
     public static void  showRationale(Context context, String[] permissions, int requestCode, String message, boolean showAppSetting){
         showRationale(context,
@@ -71,7 +89,17 @@ public class RuntimePermissionUtils {
                 message,
                 showAppSetting);
     }
-    public static void showRationale(final Context context, final Fragment fragment, final String[] permissions, final int requestCode, String message, final boolean showAppSetting){
+    public static void showRationale(Context context, Fragment fragment, String[] permissions, int requestCode, String message, boolean showAppSetting){
+        showRationale(context,
+                fragment,
+                permissions,
+                requestCode,
+                message,
+                showAppSetting,
+                null);
+    }
+    public static void showRationale(final Context context, final Fragment fragment, final String[] permissions,
+                                     final int requestCode, String message, final boolean showAppSetting, final DialogInterface.OnClickListener cancelListener){
         new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton("OK",  new DialogInterface.OnClickListener() {
@@ -101,11 +129,10 @@ public class RuntimePermissionUtils {
 
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton("Cancel", cancelListener)
                 .setCancelable(false)
                 .create()
                 .show();
-
     }
 
     public static boolean addPermission(Context context, List<String> permissionsList, String permission){
